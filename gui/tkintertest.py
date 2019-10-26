@@ -1,4 +1,5 @@
 from tkinter import *
+from PIL import Image, ImageTk
 
 class Window(Frame):
     
@@ -6,9 +7,6 @@ class Window(Frame):
         Frame.__init__(self, master)
         self.master = master
         self.init_window()
-
-    def exit(self):
-        exit()
         
     def init_window(self):
 
@@ -19,22 +17,34 @@ class Window(Frame):
         self.master.config(menu=menu)
 
         file = Menu(menu)
-        
         file.add_command(label="Exit", command=self.exit)
         menu.add_cascade(label="File", menu=file)
 
-        edit = Menu(menu)
-        
-        edit.add_command(label="Undo")
+        edit = Menu(menu)   
+        edit.add_command(label="Show Picture", command=self.showImg)
+        edit.add_command(label="Show Text", command=self.showText)
         menu.add_cascade(label="Edit", menu=edit)
         
         #quitButton = Button(self, text="Quit")
         #quitButton.place(x=0, y=0)
- 
-        
 
+    def exit(self):
+         exit()
+
+    def showImg(self):
+        load = Image.open("waves.png")
+        render = ImageTk.PhotoImage(load)
+
+        img = Label(self, image=render)
+        img.image = render
+        img.place(x=0, y=0)
+        
+    def showText(self):
+        text = Label(self, text="Sample Waves")
+        text.pack()
+        
 root = Tk()
-root.geometry("1080x1080")
+root.geometry("1000x4000")
 
 app = Window(root)
 
